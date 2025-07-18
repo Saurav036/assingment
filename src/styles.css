@@ -1,0 +1,562 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.user-buttons button {
+  padding: 8px 15px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-buttons button:hover {
+  background-color: #d0d0d0;
+}
+
+.user-buttons button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-permissions {
+  padding: 8px 15px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-permissions:hover {
+  background-color: #0b7dda;
+}
+
+.file-explorer {
+  margin-top: 20px;
+}
+
+.folder, .file {
+  padding: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.folder:hover, .file:hover {
+  background-color: #f0f0f0;
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.folder-icon, .file-icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.folder-icon.open {
+  color: #ff8c00;
+}
+
+.folder-name, .file-name {
+  font-size: 15px;
+}
+
+.folder-contents {
+  border-left: 2px solid #ddd;
+  padding-left: 15px;
+  margin-left: 15px;
+}
+
+.permission-badge {
+  margin-left: 8px;
+  color: #777;
+  font-size: 12px;
+}
+
+.no-access {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+/* Permission Editor Styles */
+.permission-editor-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.permission-editor {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+}
+
+.permission-editor h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.employee-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.employee-selector button {
+  padding: 8px 15px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.employee-selector button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.current-permissions ul {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.current-permissions li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.current-permissions li:last-child {
+  border-bottom: none;
+}
+
+.current-permissions button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-permission {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.add-permission select {
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.add-permission button {
+  padding: 8px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.editor-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editor-actions .save {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.editor-actions .cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+
+:root {
+  --color-bg: #ffffff;
+  --color-border: #d0d7de;
+  --color-text: #24292f;
+  --color-text-secondary: #57606a;
+  --color-primary: #0969da;
+  --color-primary-hover: #0860ca;
+  --color-accent: #f6f8fa;
+  --color-accent-hover: #eaeef2;
+  --color-danger: #cf222e;
+  --color-danger-hover: #a40e26;
+  --color-success: #1a7f37;
+  --color-success-hover: #17632d;
+  --shadow-small: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.08);
+  --radius-small: 6px;
+  --radius-medium: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: #f6f8fa;
+}
+
+.app-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  box-shadow: var(--shadow-medium);
+}
+
+.app-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.user-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.user-switcher {
+  display: flex;
+  gap: 8px;
+}
+
+.user-button {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-button:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.user-button.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.permission-button {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--color-success);
+  color: white;
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.permission-button:hover {
+  background-color: var(--color-success-hover);
+  border-color: var(--color-success-hover);
+}
+
+.current-view {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.app-content {
+  padding: 16px 24px;
+}
+
+.file-explorer {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background-color: var(--color-bg);
+}
+
+.file-tree {
+  padding: 8px 0;
+}
+
+.empty-state {
+  padding: 32px;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.empty-state-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.empty-state h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.folder-item, .file-item {
+  padding-left: calc(var(--level) * 16px);
+}
+
+.folder-header, .file-header {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.folder-header:hover, .file-header:hover {
+  background-color: var(--color-accent);
+}
+
+.folder-icon, .file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  color: var(--color-text-secondary);
+}
+
+.folder-name, .file-name {
+  font-size: 14px;
+  font-weight: 400;
+  flex-grow: 1;
+}
+
+.folder-contents {
+  margin-left: 8px;
+  border-left: 1px solid var(--color-border);
+}
+
+.permission-badge {
+  margin-left: 8px;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.octicon {
+  display: inline-block;
+  overflow: visible;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+/* Permission Editor Styles */
+.permission-editor-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.permission-editor {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-medium);
+  width: 480px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+}
+
+.permission-editor-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.permission-editor-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.permission-editor-body {
+  padding: 16px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.employee-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 16px;
+}
+
+.employee-tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.employee-tab.active {
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.permission-list {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.permission-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.permission-item:last-child {
+  border-bottom: none;
+}
+
+.remove-permission {
+  color: var(--color-danger);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.add-permission-form {
+  display: flex;
+  gap: 8px;
+}
+
+.path-select {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+.add-button {
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+}
+
+.permission-editor-footer {
+  padding: 16px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.save-button {
+  padding: 8px 16px;
+  background-color: var(--color-success);
+  color: white;
+  border: none;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+}
+
+.cancel-button {
+  padding: 8px 16px;
+  background-color: var(--color-accent);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  cursor: pointer;
+}
